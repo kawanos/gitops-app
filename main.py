@@ -45,8 +45,8 @@ def version():
 def fuka():
     def fibo2():
         slowfibo(2)
-    def fibo20():
-        slowfibo(20)
+    def fibo26():
+        slowfibo(26)
     def fibo30():
         slowfibo(30)
     t = []
@@ -59,7 +59,7 @@ def fuka():
             r = {"name":runfunc.__name__, "elapse":end-start}
             t.append(r)
         return r
-    _calling(fibo20)
+    _calling(fibo26)
     _calling(fibo2)
     _calling(fibo30)
     return jsonify(t)
