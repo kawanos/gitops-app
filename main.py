@@ -1,17 +1,40 @@
 
 import os
-
 from flask import Flask,jsonify
 import json
+import time
+
+from opentelemetry import trace
+from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.propagate import set_global_textmap
+from opentelemetry.propagators.cloud_trace_propagator import (
+    CloudTraceFormatPropagator,
+)
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+set_global_textmap(CloudTraceFormatPropagator())
 
 app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app)
+
+
+tracer_provider = TracerProvider()
+cloud_trace_exporter = CloudTraceSpanExporter()
+tracer_provider.add_span_processor(
+    BatchSpanProcessor(cloud_trace_exporter)
+)
+trace.set_tracer_provider(tracer_provider)
+
+tracer = trace.get_tracer(__name__)
 
 local_version = "0.01"
 
 @app.route("/")
 @app.route("/<name>")
 def hello_world(name = "World"):
-    return "<H2>こんにちわ {}!</h2>".format(name)
+    with tracer.start_as_current_span("hello_world"):
+        return "<H2>こんにちわ {}!</h2>".format(name)
 
 
 @app.route("/version")
@@ -28,13 +51,13 @@ def fuka():
         slowfibo(30)
     t = []
     def _calling(runfunc):
-        import time
-        s = time.process_time()
-        start = time.time()
-        runfunc()
-        end = time.time()
-        r = {"name":runfunc.__name__, "elapse":end-start}
-        t.append(r)
+        with tracer.start_as_current_span(runfunc.__name__):
+            s = time.process_time()
+            start = time.time()
+            runfunc()
+            end = time.time()
+            r = {"name":runfunc.__name__, "elapse":end-start}
+            t.append(r)
         return r
     _calling(fibo20)
     _calling(fibo2)
