@@ -26,10 +26,20 @@ def fuka():
         slowfibo(20)
     def fibo30():
         slowfibo(30)
-    fibo20()
-    fibo2()
-    fibo30()
-    return "There is something high loaded by slow fibo"
+    t = []
+    def _calling(runfunc):
+        import time
+        s = time.process_time()
+        start = time.time()
+        runfunc()
+        end = time.time()
+        r = {"name":runfunc.__name__, "elapse":end-start}
+        t.append(r)
+        return r
+    _calling(fibo20)
+    _calling(fibo2)
+    _calling(fibo30)
+    return jsonify(t)
     
 def slowfibo(n):
 	if n < 2 :
