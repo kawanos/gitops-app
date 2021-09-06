@@ -34,7 +34,7 @@ local_version = "0.01"
 @app.route("/<name>")
 def hello_world(name = "World"):
     with tracer.start_as_current_span("hello_world"):
-        return "<H2>こんにちわ {}!</h2>".format(name)
+        return "<H2>Hello, {}!</h2>".format(name)
 
 
 @app.route("/version")
