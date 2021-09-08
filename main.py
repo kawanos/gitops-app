@@ -27,6 +27,7 @@ tracer_provider.add_span_processor(
 trace.set_tracer_provider(tracer_provider)
 
 tracer = trace.get_tracer(__name__)
+print(f"tracer name: {__name__}")
 
 local_version = "0.01"
 
