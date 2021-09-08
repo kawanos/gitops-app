@@ -27,13 +27,13 @@ tracer_provider.add_span_processor(
 trace.set_tracer_provider(tracer_provider)
 
 tracer = trace.get_tracer(__name__)
-print(f"tracer name: {__name__}")
 
 local_version = "0.01"
 
 @app.route("/")
 @app.route("/<name>")
 def hello_world(name = "World"):
+    print(f"tracer name: {__name__}")
     with tracer.start_as_current_span("hello_world"):
         return "<H2>Hello, {}!</h2>".format(name)
 
