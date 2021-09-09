@@ -42,6 +42,12 @@ def hello_world(name = "World"):
 def version():
     return jsonify({"version":local_version})
 
+@app.route("/api")
+@app.route("/api/0.01")
+def _api():
+    from datetime import datetime
+    return jsonify({"name":datetime.now().strftime("%Y%m%d-%H:%M:%S")})
+
 @app.route("/fuka")
 def fuka():
     def fibo2():
