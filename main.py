@@ -43,7 +43,7 @@ def version():
     return jsonify({"version":local_version})
 
 @app.route("/api")
-@app.route("/api/0.01")
+@app.route("/api/0.02")
 def _api():
     from datetime import datetime
     return jsonify({"name":datetime.now().strftime("%Y%m%d-%H:%M:%S")})
