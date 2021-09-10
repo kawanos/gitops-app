@@ -45,8 +45,10 @@ def version():
 @app.route("/api")
 @app.route("/api/0.02")
 def _api():
-    from datetime import datetime
-    return jsonify({"name":datetime.now().strftime("%Y%m%d-%H:%M:%S")})
+    from datetime import datetime, timezone
+    # d = datetime.datetime.now()
+    d = datetime.datetime.now(timezone(timedelta(hours=+9), 'JST'))
+    return jsonify({"name":dstrftime("%Y%m%d-%H:%M:%S")})
 
 @app.route("/fuka")
 def fuka():
