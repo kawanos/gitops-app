@@ -46,9 +46,9 @@ def version():
 @app.route("/api/0.02")
 def _api():
     from datetime import datetime, timezone, timedelta
-    # d = datetime.datetime.now()
-    d = datetime.datetime.now(timezone(timedelta(hours=+9), 'JST'))
-    return jsonify({"name":dstrftime("%Y%m%d-%H:%M:%S")})
+    # d = datetime.now()
+    d = datetime.now(timezone(timedelta(hours=+9), 'JST'))
+    return jsonify({"name":d.strftime("%Y%m%d-%H:%M:%S")})
 
 @app.route("/fuka")
 def fuka():
