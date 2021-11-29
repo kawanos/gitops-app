@@ -24,7 +24,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/<name>")
 def hello_world(name = "World"):
-    return "<H2>Hello {}!</h2>".format(name)
+    return "<H2>Good evening {}!</h2>".format(name)
 
 @app.route("/fuka")
 def fuka():
