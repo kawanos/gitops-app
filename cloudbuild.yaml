@@ -44,6 +44,6 @@ steps:
   secretEnv: ['TOKEN']
 availableSecrets:
   secretManager: 
-  - versionName: projects/979620584367/secrets/test-token/versions/3
+  - versionName: projects/496950556007/secrets/test-secret/versions/latest
   # - versionName: projects/749198984725/secrets/test-token/versions/3
     env: TOKEN
